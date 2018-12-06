@@ -5,6 +5,31 @@ import matplotlib.pyplot as plt
 from random_graph import Directed as Random_directed
 
 def apply(g, E, gamma, theta):
+    """ Generating weights for given topology
+
+    Parameters
+    ----------
+    g : igraph.Graph
+        Given graph.
+    E : float
+        Total external assets of network.
+    gamma : float
+        Net worth as percenage of total assets.
+    theta : float
+        Interbank assets as percenage of total assets.
+
+    Returns
+    -------
+    6xN array [a, e, i, c, d, b]
+        a - individual bank's assets
+        e - external assets
+        i - interbank assets
+        c - net worths
+        d - customers' deposits
+        b - interbank borrowing
+
+    """
+
     N = g.vcount()
     beta = 1 - theta
     A = E / beta;
