@@ -19,6 +19,8 @@ class GraphGenerator():
         self.targets = targets
         self.weights = weights
 
+        print(targets, weights)
+
         self.weightsum = 0
         for x in weights:
             self.weightsum += weights[x]
@@ -128,8 +130,30 @@ class GraphGenerator():
 
 
 
-def Erdos_Renyi(n, p):
+def Random_graph(n, p):
     return igraph.Graph.Erdos_Renyi(n, p, directed=False, loops=False)
+
+
+def Make_directed(g):
+
+    g = g.as_directed()
+
+    N = g.vcount()
+    edges = [(i, edge) for i, edge in enumerate(g.get_edgelist())]
+    random.shuffle(edges)
+    existing = [[False for _ in range(N)] for _ in range(N)]
+    to_delete = []
+
+
+    for i, edge in edges:
+        if existing[edge[0]][edge[1]]:
+            to_delete.append(i)
+        else:
+            existing[edge[0]][edge[1]] = existing[edge[1]][edge[0]] = True
+
+    g.delete_edges(to_delete)
+
+    return g
 
 
 if __name__ == "__main__":
@@ -138,21 +162,21 @@ if __name__ == "__main__":
     targets = {
         'density': 0.062,
         'degree': 15.61,
-        'clustering': 0.087,
+        'clustering': 0.3,
     }
 
     weights = {
         'density': 1,
-        'degree': 0.1,
-        'clustering': 1,
+        'degree': 1,
+        'clustering': 10,
     }
 
-    G = Erdos_Renyi(500, 0)
+    G = Random_graph(500, 0)
 
     gen = GraphGenerator(targets, weights)
 
     [g, energy] = gen.simulated_annealing(G)
-
+    g.write_pickle("graph")
     print(g.density())
     print(mean(g.degree()))
     print(g.transitivity_avglocal_undirected())
