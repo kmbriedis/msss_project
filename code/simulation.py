@@ -70,9 +70,11 @@ def simulate(g, weights, shock_size, shock_bank):
 
     shock[shock_bank] = min(shock_size, a[shock_bank])
 
-    while max(shock) > 0.00001:
-        for s_i, s_shock in enumerate(shock):
-            if s_shock > 0.00001:
+    eps = 1
+    while max(shock) > eps and max(c) > eps:
+        for s_i in range(N):
+            s_shock = shock[s_i]
+            if s_shock > eps:
                 not_absorbed = max(0, s_shock - c[s_i])
                 c[s_i] = max(0, c[s_i] - s_shock)
                 shock[s_i] = 0
@@ -93,7 +95,7 @@ def simulate(g, weights, shock_size, shock_bank):
 
             shock[s_i] = 0
 
-    return sum([1 if x < 1 else 0 for x in c])
+    return sum([1 if x < eps else 0 for x in c])
 
 
 def sim_defaults(E, N, p, theta, gamma, shock):
