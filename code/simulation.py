@@ -1,6 +1,7 @@
-from generate_graph import Random_graph, Make_directed
 import numpy as np
 import random
+import time
+import multiprocessing
 import matplotlib.pyplot as plt
 import random_graph
 
@@ -60,9 +61,9 @@ def apply(g, E, gamma, theta):
 
 def simulate(g, weights, shock_size, shock_bank):
     [a, e, i, c, d, b, i_full, _] = weights
-    i_full = np.array(i_full)
-    b = np.array(b)
-    c = np.array(c)
+    i_full = np.copy(i_full)
+    b = np.copy(b)
+    c = np.copy(c)
     N = g.vcount()
 
     not_defaulted = np.ones(N, dtype=int)
@@ -100,8 +101,7 @@ def simulate(g, weights, shock_size, shock_bank):
 
 def sim_defaults(E, N, p, theta, gamma, shock):
     G = random_graph.Directed2(N, p)
-    # G = Random_graph(N, p * 2)
-    # G = Make_directed(G)
+    G.write_pickle("graph2")
     weights = apply(G, E, gamma, theta)
     defaults = []
     for bank in range(G.vcount()):
@@ -110,7 +110,7 @@ def sim_defaults(E, N, p, theta, gamma, shock):
     return sum(defaults) / G.vcount()
 
 
-def plot_results(x, results):
+def plot_results(x, x_label, N, results):
     results = np.array(results)
 
     # Plot results
@@ -121,43 +121,59 @@ def plot_results(x, results):
     ax.plot(x, mu, lw=2, label='', color='blue')
     ax.fill_between(x, np.max(results, 1), np.min(results, 1), facecolor='blue', alpha=0.5)
     # ax.legend(loc='upper left')
-    ax.set_xlabel('Variable')
+    ax.set_xlabel(x_label)
 
     ticks = ax.get_xticks()
     ax.set_xticklabels(["%.2f%%" % (x * 100) for x in ticks])
     np.mean(results, 1)
     ax.set_ylabel('Number of defaults')
+    ax.set_ylim((0, N))
     ax.grid()
-    plt.show()
+    plt.show(block=False)
 
 
-def gamma_variation():
-    gammas = np.linspace(0, 0.1, num=100)
+def plot_results_multiple(x, x_label, N, results, labels):
+    fig, ax = plt.subplots(1)
 
-    results = [[] for _ in gammas]
+    colors = ['red', 'green', 'blue']
 
-    for i, gamma in enumerate(gammas):
-        print(i, end='\r')
-        for _ in range(100):
-            results[i].append(sim_defaults(100000, 25, 0.2, 0.2, gamma, 100000))
+    for i, i_results in enumerate(results):
+        ax.plot(x, np.mean(i_results, 1), lw=2, label=labels[i], color=colors[i])
+        ax.fill_between(x, np.max(i_results, 1), np.min(i_results, 1), facecolor=colors[i], alpha=0.5)
+        ax.legend(loc='upper left')
 
-    plot_results(gammas, results)
-
-
-def p_variation():
-    probs = np.linspace(0.01, 0.99, num=100)
-
-    results = [[] for _ in probs]
-
-    for i, p in enumerate(probs):
-        print(i, end='\r')
-        for _ in range(20):
-            results[i].append(sim_defaults(100000, 25, p, 0.2, 0.01, 100000))
-
-    plot_results(probs, results)
+    ax.set_xlabel(x_label)
+    ticks = ax.get_xticks()
+    ax.set_xticklabels(["%.2f%%" % (x * 100) for x in ticks])
+    ax.set_ylabel('Number of defaults')
+    ax.set_ylim((0, N))
+    ax.grid()
+    plt.show(block=False)
 
 
-if __name__ == "__main__":
-    gamma_variation()
-    # p_variation()
-    # print(sim_defaults(100000, 25, 0.2, 0.2, 0.2, 100000))
+def Multicore_variation(variables, each_iter):
+    sets = []
+    set_to_result = []
+    results = [[] for _ in variables]
+    for i, params in enumerate(variables):
+        for _ in range(each_iter):
+            sets.append(params)
+            set_to_result.append(i)
+
+    pool = multiprocessing.Pool()
+    rs = pool.starmap_async(sim_defaults, sets)
+    pool.close()
+
+    while (True):
+        if (rs.ready()): break
+        remaining = rs._number_left
+        print("Waiting for %i tasks to complete..." % (remaining), end="\r")
+        time.sleep(0.25)
+
+    print("\r\nDone")
+
+    raw_results = rs.get()
+    for i, r in enumerate(raw_results):
+        results[set_to_result[i]].append(r)
+
+    return results
