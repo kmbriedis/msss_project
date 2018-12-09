@@ -64,7 +64,7 @@ cd msss_project/code
 
 ## Light test
 
-To run light tests, make sure all dependencies are installed you are in cloned directory.
+To run light tests, make sure all dependencies are installed and you are in cloned directory.
 
 ### Reproducing default dynamics
 
@@ -81,5 +81,20 @@ python test_light.py --reproduce-sim
 | Erdös-Rényi probability variation     | ![Density variation - light](media/density_light.png)        | ![Density variation - full](media/density_full.png)        | ![Density variation - Nier et al.](media/density_Nier.png)        |
 
 (step by step instructions to reproduce your results. _Keep in mind that people reading this should accomplish to reproduce your work within 10 minutes. It needs to be self-contained and easy to use_. e.g. git clone URL_PROY; cd URL_PROY; python3 main.py --light_test (#--light test runs in less than 5minutes with up to date hardware))
+
+### Reproducing default dynamics on graphs with specific topological properties
+
+There are pregenerated graphs in `other/pregenerated_graphs` directory. Unzip `clustering_light.zip` and `communities.zip` in your chosen **`$UNZIP_DIR`**
+
+Run:
+
+```
+python test_light.py --sim-communities $UNZIP_DIR/communities
+python test_light.py --sim-clustering $UNZIP_DIR/clustering_light
+```
+
+### BONUS: Reproducing complex network structure generation
+
+TODO
 
 ## Full test

@@ -7,6 +7,7 @@ import time
 import matplotlib.pyplot as plt
 
 from simulation import Multicore_variation, plot_results, plot_results_multiple
+from eval_pregenerated import Evaluate_pregenerated
 
 DEFAULT_PARAMS = {
     'E': 100000,
@@ -79,6 +80,44 @@ def reproduceSim():
     plt.show()
 
 
+def simCommunities(base_path):
+    start_time = time.time()
+    print("Variating communities on pregenerated graphs")
+
+    results = []
+    labels = []
+    evalParam = lambda g, _: g.community_fastgreedy().optimal_count
+    for gamma in [0.005, 0.01, 0.05]:
+        print("Gamma %.2f" % gamma)
+        simParams = (DEFAULT_PARAMS['E'], gamma, DEFAULT_PARAMS['theta'], DEFAULT_PARAMS['E'])
+        params, defaults, N = Evaluate_pregenerated(base_path, evalParam, simParams)
+        results.append(defaults)
+        labels.append("Net worth %.0f%%" % (gamma * 100))
+
+    plot_results_multiple(params, "Number of communities", N, results, labels)
+    print("Took %i seconds" % (time.time() - start_time))
+    plt.show()
+
+
+def simClustering(base_path):
+    start_time = time.time()
+    print("Variating clustering on pregenerated graphs")
+
+    results = []
+    labels = []
+    evalParam = lambda _, g: g.transitivity_avglocal_undirected()
+    for gamma in [0.005, 0.01, 0.05]:
+        print("Gamma %.2f" % gamma)
+        simParams = (DEFAULT_PARAMS['E'], gamma, DEFAULT_PARAMS['theta'], DEFAULT_PARAMS['E'])
+        params, defaults, N = Evaluate_pregenerated(base_path, evalParam, simParams)
+        results.append(defaults)
+        labels.append("Net worth %.0f%%" % (gamma * 100))
+
+    plot_results_multiple(params, "Clustering coefficient", N, results, labels)
+    print("Took %i seconds" % (time.time() - start_time))
+    plt.show()
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='')
 
@@ -86,7 +125,17 @@ if __name__ == "__main__":
                         action='store_true',
                         help='Reproduce crisis simulation methods described in paper "Network models and financial stability"')
 
+    parser.add_argument('--sim-communities', dest='simCommunities', default=False)
+
+    parser.add_argument('--sim-clustering', dest='simClustering', default=False)
+
     args = parser.parse_args()
 
     if args.reproduceSim:
         reproduceSim()
+    elif args.simCommunities:
+        simCommunities(args.simCommunities)
+    elif args.simClustering:
+        simClustering(args.simClustering)
+    else:
+        print("No action selected")
