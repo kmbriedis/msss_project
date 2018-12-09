@@ -1,3 +1,12 @@
+"""
+    Written by Kārlis Mārtiņš Briedis
+    Based on:
+        Nier, Erlend & Yang, Jing & Yorulmazer, Tanju & Alentorn, Amadeo. (2008).
+            Network Models and Financial Stability. Journal of Economic Dynamics
+            and Control. 31. 2033-2060. 10.1016/j.jedc.2007.01.014.
+
+"""
+
 import numpy as np
 import random
 import time
@@ -7,7 +16,6 @@ import random_graph
 
 def apply(g, E, gamma, theta):
     """ Generating weights for given topology
-        Reference to paper?
 
     Parameters
     ----------
@@ -61,6 +69,25 @@ def apply(g, E, gamma, theta):
 
 
 def simulate(g, weights, shock_size, shock_bank):
+    """SImulation of default dynamics
+
+    Parameters
+    ----------
+    g : igraph.Graph
+        Directed graph to use for simulation.
+    weights : tuple
+        Output of apply method.
+    shock_size : float
+        Initial shock size.
+    shock_bank : int
+        Bank where initial shock is applied.
+
+    Returns
+    -------
+    int
+        Number of defaults.
+
+    """
     [a, e, i, c, d, b, i_full, _] = weights
     i_full = np.copy(i_full)
     b = np.copy(b)
@@ -101,8 +128,31 @@ def simulate(g, weights, shock_size, shock_bank):
 
 
 def sim_defaults(E, N, p, theta, gamma, shock):
+    """Launch simulation for random G(n, p) graph
+        from every node in graph
+
+    Parameters
+    ----------
+    E : float
+        Size of total assets.
+    N : int
+        Number of banks.
+    p : float
+        Probability of 2 nodes being connected.
+    gamma : float
+        Net worth as percenage of total assets.
+    theta : float
+        Interbank assets as percenage of total assets.
+    shock : float
+        Size of initial shock.
+
+    Returns
+    -------
+    float
+        Average number of defaults.
+
+    """
     G = random_graph.Directed2(N, p)
-    G.write_pickle("graph2")
     weights = apply(G, E, gamma, theta)
     defaults = []
     for bank in range(G.vcount()):
@@ -153,6 +203,22 @@ def plot_results_multiple(x, x_label, N, results, labels):
 
 
 def Multicore_variation(variables, each_iter):
+    """Do defaults simulation with different
+        parameters on multiple cores
+
+    Parameters
+    ----------
+    variables : array
+        Array of tuples of arguments that would be passed to sim_defaults.
+    each_iter : type
+        Number of iterations per each variation.
+
+    Returns
+    -------
+    array
+        Array of arrays of each variable type and simulation.
+
+    """
     sets = []
     set_to_result = []
     results = [[] for _ in variables]

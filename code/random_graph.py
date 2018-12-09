@@ -2,6 +2,21 @@ from igraph import Graph
 from random import random as rand
 
 def Directed(n, p):
+    """Generate directed graph
+
+    Parameters
+    ----------
+    n : int
+        Number of nodes
+    p : float
+        Probability that 2 nodes are connected.
+
+    Returns
+    -------
+    igraph.Graph
+        Generated graph.
+
+    """
     g = Graph(n, directed = True)
     for i in range(n):
         for j in range(i):
@@ -13,6 +28,21 @@ def Directed(n, p):
     return g
 
 def Directed2(n, p):
+    """Generate directed graph
+
+    Parameters
+    ----------
+    n : int
+        Number of nodes
+    p : float
+        Probability that 2 nodes are connected.
+
+    Returns
+    -------
+    igraph.Graph
+        Generated graph.
+
+    """
     g = Graph(n, directed = True)
     for i in range(n):
         for j in range(n):
@@ -21,6 +51,21 @@ def Directed2(n, p):
     return g
 
 def Undirected(n, p):
+    """Generate undirected graph
+
+    Parameters
+    ----------
+    n : int
+        Number of nodes
+    p : float
+        Probability that 2 nodes are connected.
+
+    Returns
+    -------
+    igraph.Graph
+        Generated graph.
+
+    """
     g = Graph(n)
     for i in range(n):
         for j in range(i):
