@@ -28,6 +28,8 @@
 
 ## References
 
+Nier, Erlend & Yang, Jing & Yorulmazer, Tanju & Alentorn, Amadeo. (2008). Network Models and Financial Stability. Journal of Economic Dynamics and Control. 31. 2033-2060. 10.1016/j.jedc.2007.01.014.
+
 (Add the bibliographic references you intend to use)
 (Explain possible extension to the above models)
 (Code / Projects Reports of the previous year)
@@ -42,4 +44,42 @@
 
 # Reproducibility
 
+> Prerequisite for all reproducibility tests is `python >=3.6`
+
+### Installing dependencies
+
+```
+python -m pip install numpy matplotlib python-igraph
+```
+
+> For installation of igraph, please refer to its [python-igraph Manual](https://igraph.org/python/doc/tutorial/install.html).
+> **_For Windows users_** a convinient way is to use [unofficial windows binaries](https://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph) by downloading suitable `.whl` file and running e.g. `pip install python_igraph‑0.7.1.post6‑cp36‑cp36m‑win_amd64.whl`
+
+### Cloning the project
+
+```
+git clone git@github.com:kmbriedis/msss_project.git
+cd msss_project/code
+```
+
+## Light test
+
+To run light tests, make sure all dependencies are installed you are in cloned directory.
+
+### Reproducing default dynamics
+
+To reproduce results of Nier et al., (...) run (running time 1-2 minutes):
+
+```
+python test_light.py --reproduce-sim
+```
+
+|                                       | Light test                                                   | Full test                                                  | Nier et al.                                                       |
+| ------------------------------------- | ------------------------------------------------------------ | ---------------------------------------------------------- | ----------------------------------------------------------------- |
+| Percentage net worth variation        | ![Net worth variation - light](media/gamma_light.png)        | ![Net worth variation - full](media/gamma_full.png)        | ![Net worth variation - Nier et al.](media/gamma_Nier.png)        |
+| Percentage interbank assets variation | ![Interbank assets variation - light](media/theta_light.png) | ![Interbank assets variation - full](media/theta_full.png) | ![Interbank assets variation - Nier et al.](media/theta_Nier.png) |
+| Erdös-Rényi probability variation     | ![Density variation - light](media/density_light.png)        | ![Density variation - full](media/density_full.png)        | ![Density variation - Nier et al.](media/density_Nier.png)        |
+
 (step by step instructions to reproduce your results. _Keep in mind that people reading this should accomplish to reproduce your work within 10 minutes. It needs to be self-contained and easy to use_. e.g. git clone URL_PROY; cd URL_PROY; python3 main.py --light_test (#--light test runs in less than 5minutes with up to date hardware))
+
+## Full test

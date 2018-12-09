@@ -11,7 +11,7 @@ from simulation import Multicore_variation, plot_results, plot_results_multiple
 DEFAULT_PARAMS = {
     'E': 100000,
     'N': 25,
-    'gamma': 0.01,
+    'gamma': 0.05,
     'density': 0.2,
     'theta': 0.2,
     'shock': 100000,
@@ -36,7 +36,7 @@ def gamma_variation():
 
 def theta_variation():
     print("Variating interbank assets")
-    thetas = np.linspace(0, 0.1, num=50)
+    thetas = np.linspace(0, 0.5, num=50)
 
     variables = []
     for theta in thetas:

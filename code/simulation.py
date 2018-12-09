@@ -38,7 +38,8 @@ def apply(g, E, gamma, theta):
     I = theta * A
     Z = g.ecount()
 
-    w = I / Z
+    w = I / Z if Z > 0 else 0
+
     M = np.array(g.get_adjacency().data)
 
     i_full = M * w
