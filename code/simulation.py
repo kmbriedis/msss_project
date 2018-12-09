@@ -118,24 +118,26 @@ def plot_results(x, x_label, N, results):
     mu = np.mean(results, 1)
     std = np.std(results, 1)
 
-    fig, ax = plt.subplots(1)
+    fig, ax = plt.subplots(1,figsize=(10,10))
+    plt.tick_params(axis='both', which='major', labelsize=25) # added by anas
     ax.plot(x, mu, lw=2, label='', color='blue')
     ax.fill_between(x, np.max(results, 1), np.min(results, 1), facecolor='blue', alpha=0.5)
     # ax.legend(loc='upper left')
-    ax.set_xlabel(x_label)
+    ax.set_xlabel(x_label, fontsize=35,size = 35)
 
     ticks = ax.get_xticks()
     ax.set_xticklabels(["%.2f%%" % (x * 100) for x in ticks])
     np.mean(results, 1)
-    ax.set_ylabel('Number of defaults')
+    ax.set_ylabel('Number of defaults', fontsize=35,size = 35)
     ax.set_ylim((0, N))
     ax.grid()
     plt.show(block=False)
 
 
 def plot_results_multiple(x, x_label, N, results, labels):
-    fig, ax = plt.subplots(1)
-
+    fig, ax = plt.subplots(1,figsize=(10,10))
+    plt.tick_params(axis='both', which='major', labelsize=25)
+    
     colors = ['red', 'green', 'blue']
 
     for i, i_results in enumerate(results):
@@ -143,10 +145,10 @@ def plot_results_multiple(x, x_label, N, results, labels):
         ax.fill_between(x, np.max(i_results, 1), np.min(i_results, 1), facecolor=colors[i], alpha=0.5)
         ax.legend(loc='upper left')
 
-    ax.set_xlabel(x_label)
+    ax.set_xlabel(x_label, fontsize=35,size = 35)
     ticks = ax.get_xticks()
     ax.set_xticklabels(["%.2f%%" % (x * 100) for x in ticks])
-    ax.set_ylabel('Number of defaults')
+    ax.set_ylabel('Number of defaults', fontsize=35,size = 35)
     ax.set_ylim((0, N))
     ax.grid()
     plt.show(block=False)
