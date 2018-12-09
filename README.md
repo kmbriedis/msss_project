@@ -15,8 +15,7 @@ underlying network.
 Recent studies have revealed the relevance of financial network structure in estimating
 systemic risk. It has also showed that the neglect of the graph topology is
 seriously underestimating the risk of default of the whole network.
-In this project, we address the issue of crisis propagation in a banking network. We
-construct first a banking system with some parameters, distribute the assets on the
+In this project, we address the issue of crisis propagation in a banking network. We first construct a banking system with some parameters, distribute the assets on the
 banks and finally we simulate shocks in this financial network.
 This work investigate the general behaviour of crisis propagation in a financial network,
 and therefore provides some insights about reducing the systemic risk. For
@@ -25,7 +24,9 @@ the resilience of financial networks.
 
 ## The Model
 
-(Define dependent and independent variables you want to study. Say how you want to measure them.) (Why is your model a good abstraction of the problem you want to study?) (Are you capturing all the relevant aspects of the problem?)
+The model implemented in our project is based on a model provided by Nier and collaborators.
+The latter uses random networks and some aggregated parameters of assets to create a financial network. Then it performs shocks within the same network and propagate the initial shock.
+Graph with advanced topological properties like average clustering coefficient are generated using simulated annealing evolutionary algorithm and simulation is ran to observe how these properties affects default dynamics.
 
 ## Fundamental Questions
 
