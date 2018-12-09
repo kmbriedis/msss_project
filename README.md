@@ -56,7 +56,7 @@ python -m pip install numpy matplotlib python-igraph
 ### Cloning the project
 
 ```
-git clone git@github.com:kmbriedis/msss_project.git
+git clone https://github.com/kmbriedis/msss_project.git
 cd msss_project/code
 ```
 
@@ -66,7 +66,7 @@ To run light tests, make sure all dependencies are installed and you are in clon
 
 ### Reproducing default dynamics
 
-To reproduce results of Nier et al., (...) run (running time 1-2 minutes):
+To reproduce results of Nier et al. and observe how default dynamics of banking network are affected by variation of net worth, interbank assets, or Erdös-Rényi probability, run (running time 1-2 minutes):
 
 ```
 python test_light.py --reproduce-sim
@@ -98,13 +98,9 @@ You should see graphs like these, which show how the default dynamics (number of
 | Clustering coefficient variation | ![Clustering - light](media/clustering_light.png)       | ![Clustering - full](media/clustering_full.png) |
 | Number of communities variation  | ![Communities variation - light](media/communities.png) | Same as light                                   |
 
-### BONUS: Reproducing complex network structure generation
-
-TODO
-
 ## Full test
 
-Make sure all dependencies are installed and you are in cloned directory.
+Make sure all dependencies are installed and you are in the cloned directory.
 
 ### Reproducing default dynamics
 
@@ -116,7 +112,7 @@ Refer to **Light test**, but running the command with pregenerated graphs from `
 
 ### Pregeneration of graphs with specific properties
 
-To pregenerate graph for further simulation, run these commands
+To pregenerate graphs for further simulation, run these commands
 
 > **Warning** Generation is compute-intensive and can take up to 6 hours when running on [ETH's Euler cluster](https://scicomp.ethz.ch/wiki/Euler)'s 48 cores (12 days of CPU time) when using --clustering flag.
 
@@ -137,7 +133,7 @@ module load python/3.6.0
 
 python -m pip install --install-option="--prefix=$HOME/python" python-igraph numpy
 
-git clone git@github.com:kmbriedis/msss_project.git
+git clone https://github.com/kmbriedis/msss_project.git
 cd msss_project/code
 
 bsub -W 24:00 -n 48 python generate_multicore.py --clustering # or any other command

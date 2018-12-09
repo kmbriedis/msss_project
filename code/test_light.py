@@ -92,7 +92,7 @@ def simCommunities(base_path):
         simParams = (DEFAULT_PARAMS['E'], gamma, DEFAULT_PARAMS['theta'], DEFAULT_PARAMS['E'])
         params, defaults, N = Evaluate_pregenerated(base_path, evalParam, simParams)
         results.append(defaults)
-        labels.append("Net worth %.0f%%" % (gamma * 100))
+        labels.append("Net worth %.1f%%" % (gamma * 100))
 
     plot_results_multiple(params, "Number of communities", N, results, labels)
     print("Took %i seconds to complete    " % (time.time() - start_time))
@@ -111,7 +111,7 @@ def simClustering(base_path):
         simParams = (DEFAULT_PARAMS['E'], gamma, DEFAULT_PARAMS['theta'], DEFAULT_PARAMS['E'])
         params, defaults, N = Evaluate_pregenerated(base_path, evalParam, simParams)
         results.append(defaults)
-        labels.append("Net worth %.0f%%" % (gamma * 100))
+        labels.append("Net worth %.1f%%" % (gamma * 100))
 
     plot_results_multiple(params, "Clustering coefficient", N, results, labels)
     print("Took %i seconds to complete    " % (time.time() - start_time))
