@@ -7,9 +7,21 @@
 
 ## General Introduction
 
-(States your motivation clearly: why is it important / interesting to solve this problem?)
-(Add real-world examples, if any)
-(Put the problem into a historical context, from what does it originate? Are there already some proposed solutions?)
+Systemic risk is of crucial importance when dealing with complex systems. In particular,
+financial networks are an important illustration of such systems. In this case,
+financial institutions interacts with each others respecting the graph structure of the
+underlying network.
+
+Recent studies have revealed the relevance of financial network structure in estimating
+systemic risk. It has also showed that the neglect of the graph topology is
+seriously underestimating the risk of default of the whole network.
+In this project, we address the issue of crisis propagation in a banking network. We
+construct first a banking system with some parameters, distribute the assets on the
+banks and finally we simulate shocks in this financial network.
+This work investigate the general behaviour of crisis propagation in a financial network,
+and therefore provides some insights about reducing the systemic risk. For
+this, we will scan the parameters of the used model and describe the behaviour of
+the resilience of financial networks.
 
 ## The Model
 
@@ -17,28 +29,25 @@
 
 ## Fundamental Questions
 
-(At the end of the project you want to find the answer to these questions)
-(Formulate a few, clear questions. Articulate them in sub-questions, from the more general to the more specific. )
+The main goal of this project is to investigate how does the topology of complex networks impact the default dynamics of the banking network.
 
-## Expected Results
+More specific questions include:
 
-(What are the answers to the above questions that you expect to find before starting your research?)
+* How does the network density impact the number of defaults of financial network?
+* How does the clustering of network impact the number of defaults of financial network?
+* etc.
 
 ## References
 
-Nier, Erlend & Yang, Jing & Yorulmazer, Tanju & Alentorn, Amadeo. (2008). Network Models and Financial Stability. Journal of Economic Dynamics and Control. 31. 2033-2060. 10.1016/j.jedc.2007.01.014.
+The project in mainly based on these two papers:
 
-(Add the bibliographic references you intend to use)
-(Explain possible extension to the above models)
-(Code / Projects Reports of the previous year)
+* Nier, Erlend & Yang, Jing & Yorulmazer, Tanju & Alentorn, Amadeo. (2008). Network Models and Financial Stability. Journal of Economic Dynamics and Control. 31. 2033-2060. 10.1016/j.jedc.2007.01.014.
+* V. Kashirin, Victor. (2014). Evolutionary Simulation of Complex Networks Structures with Specific Topological Properties. Procedia Computer Science. 29. 2401-2411. 10.1016/j.procs.2014.05.224.
 
 ## Research Methods
 
-(Cellular Automata, Agent-Based Model, Continuous Modeling...) (If you are not sure here: 1. Consult your colleagues, 2. ask the teachers, 3. remember that you can change it afterwards)
-
-## Other
-
-(mention datasets you are going to use)
+Random graph generation of simulated annealing.
+Crisis propagation in random graph.
 
 # Reproducibility
 
