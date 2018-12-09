@@ -150,10 +150,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.communities:
-        Generate_communities(25, 0.2, 5, 100, "data/communities/communities")
+        Generate_communities(25, 0.2, 5, 100, "pregenerated_graphs/communities/communities")
 
     if args.clustering:
-        Generate_clustering(25, 0.2, 100, 100, "data/clustering_lite/clustering")
+        Generate_clustering(25, 0.2, 100, 100, "pregenerated_graphs/clustering_lite/clustering")
 
     if args.clusteringLight:
-        Generate_clustering(25, 0.2, 50, 20, "data/clustering_lite/clustering")
+        Generate_clustering(25, 0.2, 50, 20, "pregenerated_graphs/clustering_lite/clustering")

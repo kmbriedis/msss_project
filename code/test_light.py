@@ -95,7 +95,7 @@ def simCommunities(base_path):
         labels.append("Net worth %.0f%%" % (gamma * 100))
 
     plot_results_multiple(params, "Number of communities", N, results, labels)
-    print("Took %i seconds" % (time.time() - start_time))
+    print("Took %i seconds to complete    " % (time.time() - start_time))
     plt.show()
 
 
@@ -114,7 +114,7 @@ def simClustering(base_path):
         labels.append("Net worth %.0f%%" % (gamma * 100))
 
     plot_results_multiple(params, "Clustering coefficient", N, results, labels)
-    print("Took %i seconds" % (time.time() - start_time))
+    print("Took %i seconds to complete    " % (time.time() - start_time))
     plt.show()
 
 
